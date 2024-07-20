@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Forecast for {{ city }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .weather-data {
+            margin-top: 20px;
+        }
+        .weather-entry {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .weather-entry:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Forecast for {{ city }}</h1>
+        <div class="weather-data">
+            {% if weather_data %}
+                {% for entry in weather_data %}
+                    <div class="weather-entry">
+                        <strong>Time:</strong> {{ entry.time }}<br>
+                        <strong>Temperature:</strong> {{ entry.temperature }}°C
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No weather data available.</p>
+            {% endif %}
+        </div>
+        <a href="{% url 'index' %}">Search again</a>
+    </div>
+</body>
+</html>

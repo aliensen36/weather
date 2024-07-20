@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Search</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <h1>Weather Search</h1>
+
+    <form action="{% url 'search' %}" method="get">
+        <label for="city">Enter city:</label>
+        <input id="city" name="city" type="text" autocomplete="off">
+        <input type="submit" value="Search">
+    </form>
+
+    <!-- Предложения городов -->
+    <h2>Previously Searched Cities:</h2>
+    <ul>
+        {% for search in recent_searches %}
+            <li><a href="{% url 'search' %}?city={{ search.city_name }}">{{ search.city_name }}</a></li>
+        {% empty %}
+            <li>No recent searches.</li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        $(function() {
+            $("#city").autocomplete({
+                source: "{% url 'autocomplete_city' %}",
+            });
+        });
+    </script>
+</body>
+</html>
